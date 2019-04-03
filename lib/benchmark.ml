@@ -48,7 +48,7 @@ let s = to_span 1.
 let default_quota = us 250.
 
 let exceeded_allowed_time allowed_time_span t =
-  let t' = Mtime_clock.now () in
+  let t' = Mtime.of_uint64_ns (Clock.get ()) in
   Mtime.Span.compare (Mtime.span t' t) allowed_time_span > 0
 
 let runnable f i =
@@ -130,7 +130,7 @@ let run ?(start = 0) ?(sampling = `Geometric 1.01) ?(stabilize = false)
       measures
     |> unzip
   in
-  let init_time = Mtime_clock.now () in
+  let init_time = Mtime.of_uint64_ns (Clock.get ()) in
   while
     (not (exceeded_allowed_time quota init_time))
     && !idx < Array.length measurement_raw
