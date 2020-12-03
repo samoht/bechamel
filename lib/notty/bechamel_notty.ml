@@ -10,10 +10,7 @@ let ( <.> ) f g x = f (g x)
 module Unit = struct
   let units = Hashtbl.create 16
 
-  let add instance unit =
-    if String.length unit > 5
-    then Fmt.invalid_arg "A unit shoud be smaller than 5 bytes: %s" unit ;
-    Hashtbl.add units (Measure.label instance) unit
+  let add instance unit = Hashtbl.add units (Measure.label instance) unit
 
   let label label = I.string A.empty label
 
